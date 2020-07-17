@@ -172,11 +172,13 @@ class Preset {
       previousId = this.list.length - 1;
     }
     this.setCurrent(previousId);
+    return previousId;
   }
 
   next() {
     let nextId = (this.current + 1) % this.list.length;
     this.setCurrent(nextId);
+    return nextId;
   }
 
   setCurrent(id) {
@@ -196,21 +198,20 @@ class Preset {
     $("#preset-" + this.current.toString()).removeClass(this.classes["defaut"]);
     $("#preset-" + this.current.toString()).addClass(this.classes["current"]);
 
-    let itemValue = this.list[this.current]["time"]["value"];
-    let itemUnit = this.list[this.current]["time"]["unit"];
-    $("#delay-time").val(itemValue);
-    $("#delay-time-display").text(itemValue.toString() + itemUnit);
+    let value = this.list[this.current]["time"]["value"];
+    let valueWithUnit = value.toString() + this.list[this.current]["time"]["unit"];
+    $("#delay-time").val(value);
+    $("#delay-time-display").text(valueWithUnit);
 
-    itemValue = this.list[this.current]["feedback"]["value"];
-    itemUnit = this.list[this.current]["feedback"]["unit"];
-    $("#delay-feedback").val(itemValue);
-    $("#delay-feedback-display").text(itemValue.toString() + itemUnit);
+    value = this.list[this.current]["feedback"]["value"];
+    valueWithUnit = value.toString() + this.list[this.current]["feedback"]["unit"];
+    $("#delay-feedback").val(value);
+    $("#delay-feedback-display").text(valueWithUnit);
 
-    itemValue = this.list[this.current]["modulation"]["value"];
-    itemUnit = this.list[this.current]["modulation"]["unit"];
-    $("#delay-modulation").val(itemValue);
-    $("#delay-modulation-display").text(itemValue.toString() + itemUnit);
-
+    value = this.list[this.current]["modulation"]["value"];
+    valueWithUnit = value.toString() + this.list[this.current]["modulation"]["unit"];
+    $("#delay-modulation").val(value);
+    $("#delay-modulation-display").text(valueWithUnit);
 
     $("#preset-" + this.current.toString() + "-id").removeClass(this.classes["defaut-text"]);
     $("#preset-" + this.current.toString() + "-id").addClass(this.classes["current-text"]);
@@ -222,11 +223,10 @@ class Preset {
     $("#preset-" + this.current.toString() + "-modulation-display").addClass(this.classes["current-text"]);
   }
 
-
   add() {
     this.addList(0, 0, 0);
     this.addHtml(this.list.length - 1);
-
+    return this.list.length - 1;
   }
 
   addList(time, feedback, modulation) {
@@ -304,6 +304,6 @@ class Preset {
     for (var i = 0; i < this.list.length; i++) {
       this.addHtml(i);
     }
+    this.setCurrent(this.current);
   }
-
 }

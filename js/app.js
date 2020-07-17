@@ -4,64 +4,37 @@ class App {
   constructor(name) {
     this.name = name;
     this.audio = new Audio();
-    this.metronome = new Metronome();
     this.preset = new Preset();
   }
 
   start() {
     this.audio.start();
-    this.settings();
     this.preset.load();
-
-    let sliderValue = {
-      "#input-gain": {
-        "value": 0,
-        "unit": ""
-      },
-      "#delay-time": {
-        "value": 0,
-        "unit": " ms"
-      },
-      "#delay-feedback": {
-        "value": 0,
-        "unit": " %"
-      },
-      "#delay-modulation": {
-        "value": 0,
-        "unit": ""
-      }
-    }
-
-    for (var index in sliderValue) {
-      this.setSlider(index, sliderValue[index]["value"]);
-      this.setSliderDisplay(index + "-display", sliderValue[index]["value"] + sliderValue[index]["unit"]);
-    }
+    this.settings();
+    let currentValues = this.preset.list[this.preset.current];
+    this.setSlider("#input-gain", 0);
+    this.setSliderDisplay("#input-gain-display", 0);
+    this.audio.setGain(0);
+    this.audio.delay.setAll(currentValues["time"]["value"] / 1000,
+      currentValues["feedback"]["value"] / 100,
+      currentValues["modulation"]["value"]);
   }
-
 
   setSliderDisplay(id, value) {
     $(id).text(value);
   }
-
   setSlider(id, value) {
-    this.persistence(id, value);
     $(id).val(value);
   }
 
-  persistence(id, value) {
-    if (id.includes("time")) {
-      app.audio.delay.setTime(value);
-    } else if (id.includes("feedback")) {
-      app.audio.delay.setFeedback(value);
-    } else if (id.includes("modulation")) {
-      app.audio.delay.setModulation(value);
-    } else { // includes Gain
-      app.audio.setGain(value);
-    }
+  disableDelaySlider(value) {
+    $("#delay-time").prop("disabled", value);
+    $("#delay-feedback").prop("disabled", value);
+    $("#delay-modulation").prop("disabled", value);
   }
 
   settings() {
-    $('#settings-modal').modal('toggle');
+    $("#settings-modal").modal('show');
   }
 
   stop() {
@@ -73,6 +46,10 @@ var app = null;
 
 $(document).ready(function() {
   app = new App("narcissus");
+
+  $(function() {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
 
   $("#button-start").click(function() {
     $("#app-start").attr("style", "display:none;");
@@ -86,14 +63,19 @@ $(document).ready(function() {
     app.stop();
   });
 
+  /* Settings */
   $("#button-settings").click(function() {
     app.settings();
+  });
+
+  $("#settings-modal").on('hidden.bs.modal', function(e) {
+    app.audio.setInput(Mic);
   });
 
   /* Input */
   $("#input-gain").on("input", function() {
     let inputValue = $(this).val();
-    app.persistence("#input-gain-display", inputValue);
+    app.audio.setGain(inputValue);
     app.setSliderDisplay("#input-gain-display", inputValue);
   });
 
@@ -101,29 +83,72 @@ $(document).ready(function() {
   $("#app-content").delegate("input[name='app-slider']", 'input', function() {
     let inputId = "#" + $(this).attr("id").toString();
     let value = $(this).val();
-    app.persistence(inputId, value);
 
     let displayId = "#" + $(this).attr("id").toString() + "-display";
     let unit = "";
     if (displayId.includes("time")) {
+      app.audio.delay.setTime(value / 1000);
       unit = " ms";
     } else if (displayId.includes("feedback")) {
+      app.audio.delay.setFeedback(value / 100);
       unit = " %";
+    } else if (displayId.includes("modulation")) {
+      app.audio.delay.setModulation(value);
     }
     app.setSliderDisplay(displayId, value.toString() + unit);
   });
 
+  $("#delay-hold").on("input", function(v) {
+    let feedbackValue = $("#delay-feedback").val();
+    let holdValue = $("#delay-hold").is(":checked");
+    let feedbackSliderValue = $("#delay-feedback").val();
+
+    app.audio.delay.setHold(holdValue, feedbackSliderValue / 100);
+
+    if (holdValue) {
+      app.disableDelaySlider(true);
+    } else if (!$("#delay-bypass").is(":checked")) {
+      app.disableDelaySlider(false)
+    }
+  });
+
+  $("#delay-bypass").on("input", function() {
+    let bypassValue = $("#delay-bypass").is(":checked");
+    let timeValue = $("#delay-time").val();
+    let holdValue = $("#delay-hold").is(":checked");
+
+    app.audio.delay.setBypass(bypassValue, timeValue / 1000, holdValue);
+
+    if (bypassValue) {
+      app.disableDelaySlider(true);
+    } else if (!$("#delay-hold").is(":checked")) {
+      app.disableDelaySlider(false);
+    }
+  });
+
   /* Preset */
   $("#button-preset-previous").click(function() {
-    app.preset.previous();
+    let currentPreset = app.preset.list[app.preset.previous()];
+    app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
+      currentPreset["feedback"]["value"] / 100,
+      currentPreset["modulation"]["value"]);
   });
 
   $("#button-preset-next").click(function() {
-    app.preset.next();
+    let currentPreset = app.preset.list[app.preset.next()];
+    app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
+      currentPreset["feedback"]["value"] / 100,
+      currentPreset["modulation"]["value"]);
   });
 
   $("#button-preset-add").click(function() {
-    app.preset.add();
+    let newPresetId = app.preset.add();
+    if (newPresetId == app.preset.current) {
+      let currentPreset = app.preset.list[newPresetId];
+      app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
+        currentPreset["feedback"]["value"] / 100,
+        currentPreset["modulation"]["value"]);
+    }
   });
 
   $("#presets").delegate("button[name='preset-delete']", 'click', function() {
@@ -141,4 +166,23 @@ $(document).ready(function() {
     $(displayId).text($(this).val().toString() + unit);
 
   });
+
+  /* Keyboard*/
+  document.onkeydown = checkKey;
+
+  function checkKey(e) {
+
+    e = e || window.event;
+
+    if (e.key == 'b') { // bypass
+      $("#delay-bypass").trigger("click");
+    } else if (e.key == 'h') { // hold
+      $("#delay-hold").trigger("click");
+    } else if (e.keyCode == '37') { // previous preset (left arrow)
+      $("#button-preset-previous").trigger("click");
+    } else if (e.keyCode == '39') {
+      $("#button-preset-next").trigger("click");
+    } // next preset (right arrow)
+
+  }
 });
