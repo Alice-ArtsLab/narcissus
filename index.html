@@ -21,7 +21,7 @@
     <button id="button-start" type="button" class="btn btn-primary">Let's start!</button>
   </div>
 
-  <div style='display:none;' id="app-content" class="container-fluid">
+  <div id="app-content" class="container-fluid">
     <div class="table-responsive">
       <br />
       <div align=right>
@@ -37,15 +37,30 @@
       <span class="float-right text-primary" id="audio-latency"></span>
       <br />
       <br />
-      <div class="card">
+      <div class="card" id="input-card">
         <div class="card-header">Input
         </div>
         <div class="card-body">
-          <label>Gain</label>
-          <div class="float-right">
-            <span id="input-gain-display" for="delay-gain" class="text-primary" type="number">0.0</span>
+          <div id="microphone">
+            <label>Gain</label>
+            <div class="float-right">
+              <span id="input-gain-display" for="delay-gain" class="text-primary" type="number">0.0</span>
+            </div>
+            <input id="input-gain" name="app-slider" type="range" class="custom-range" min="0.0" max="2.0" step="0.01">
           </div>
-          <input id="input-gain" name="app-slider" type="range" class="custom-range" min="0.0" max="2.0" step="0.01">
+
+          <div id="player">
+            <label>Player</label>
+            <div class="center" id="player-controls">
+            </div>
+
+            <br />
+
+            <div class="custom-file" id="player-file">
+              <input type="file" class="custom-file-input" accept="audio/*">
+              <label class="custom-file-label" for="customFile" id="player-file-display">Choose audio file</label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -143,7 +158,26 @@
           </button>
         </div>
         <div class="modal-body">
-          <label>...</label>
+
+          <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Input</legend>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadios" id="settins-input-microphone" checked>
+                <label class="form-check-label" for="ettins-input-microphone">
+                  Microphone
+                </label>
+
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadios" id="settins-input-file">
+                <label class="form-check-label" for="settins-input-file">
+                  Audio file
+                </label>
+              </div>
+            </div>
+          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>

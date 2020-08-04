@@ -40,6 +40,17 @@ class App {
   stop() {
     this.audio.stop();
   }
+  setInput() {
+    if ($("#settins-input-microphone").is(":checked")) {
+      $("#player").hide();
+      $("#microphone").show();
+      return Mic;
+    } else {
+      $("#microphone").hide();
+      $("#player").show();
+      return Player;
+    }
+  }
 }
 
 var app = null;
@@ -51,15 +62,19 @@ $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip()
   })
 
+  $("#app-content").hide();
+
   $("#button-start").click(function() {
-    $("#app-start").attr("style", "display:none;");
-    $("#app-content").attr("style", "");
+    $("#app-start").hide();
+    $("#app-content").show();
+    $("#input-card").hide();
     app.start();
   });
 
   $("#button-finish").click(function() {
-    $("#app-start").attr("style", "");
-    $("#app-content").attr("style", "display:none;");
+    $("#app-content").hide();
+    $("#input-card").hide();
+    $("#app-start").show();
     app.stop();
   });
 
@@ -69,7 +84,9 @@ $(document).ready(function() {
   });
 
   $("#settings-modal").on('hidden.bs.modal', function(e) {
-    app.audio.setInput(Mic);
+    let input = app.setInput();
+    app.audio.setInput(input);
+    $("#input-card").show();
   });
 
   /* Input */
