@@ -66,6 +66,36 @@
     </div>
 
     <br />
+    <div class="card" id="input-card">
+      <div class="card-header">Recorder
+      </div>
+      <div class="card-body">
+        <!--<div class="form-group">
+          <label>Encoding</label>
+          <div>
+            <input type="radio" name="encoding" encoding="wav" checked> .wav &nbsp;
+            <input type="radio" name="encoding" encoding="ogg"> .ogg &nbsp;
+            <input type="radio" name="encoding" encoding="mp3"> .mp3
+          </div>
+        </div>
+      -->
+        <div class="form-group">
+          <div id="recording"><span class="text-danger"><strong>Recording</strong></span>&nbsp; <span id="time-display">00:00</span></div>
+          <div>
+            <button id="record" name="record-controls" class="btn btn-danger" value="start">Record</button>
+            <button id="record-cancel" name="record-controls" class="btn btn-secondary" value="cancel">Cancel</button>
+            <button id="record-stop" name="record-controls" class="btn btn-success" value="stop">Stop</button>
+          </div>
+        </div>
+
+        <hr>
+        <label id="recording-list-label" class="hidden">Recordings</label>
+        <div id="recording-list">
+        </div>
+      </div>
+    </div>
+
+    <br />
     <div class="card">
       <div class="card-header">Delay
       </div>
@@ -199,7 +229,9 @@
   <script src="js/player.js"></script>
   <script src="js/preset.js"></script>
   <script src="js/audio.js"></script>
+  <script src="js/recorder.js"></script>
   <script src="js/app.js"></script>
+
 </body>
 
 </html>

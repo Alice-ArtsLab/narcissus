@@ -1,14 +1,14 @@
 'use strict';
 
 class Player {
-  constructor(appInstance) {
-    this.appInstance = appInstance;
+  constructor(audioInstance) {
+    this.audioInstance = audioInstance;
     this.audio = document.createElement('audio');
     this.audio.controls = true;
     this.audio.autoplay = true;
-    this.node = this.appInstance.context.createMediaElementSource(this.audio);
-    this.node.connect(this.appInstance.gain);
-    this.appInstance.setGain(1);
+    this.node = this.audioInstance.context.createMediaElementSource(this.audio);
+    this.node.connect(this.audioInstance.gain);
+    this.audioInstance.setGain(1);
     $("#player-controls").empty();
     $("#player-controls").hide();
     $("#player-file").show();
