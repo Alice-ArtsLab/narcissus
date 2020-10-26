@@ -7,6 +7,7 @@ class Audio {
     this.input = null;
     this.gain = null;
     this.delay = null;
+    this.recorder = null;
   }
 
   start() {
@@ -25,6 +26,7 @@ class Audio {
 
     this.gain = this.context.createGain();
     this.delay = new Delay(this.context, 10);
+    this.record = new Recorder(this.context, this.delay.bypass);
 
     this.connectNodes();
   }

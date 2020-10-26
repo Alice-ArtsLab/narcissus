@@ -1,8 +1,8 @@
 'use strict';
 
 class Mic {
-  constructor(appInstance) {
-    this.appInstance = appInstance;
+  constructor(audioInstance) {
+    this.audioInstance = audioInstance;
     this.node = null;
     this.isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
   }
@@ -14,8 +14,8 @@ class Mic {
     var promise = navigator.mediaDevices.getUserMedia(constraints)
       .then(function(stream) {
         /* use the stream */
-        micInstance.node = micInstance.appInstance.context.createMediaStreamSource(stream);
-        micInstance.node.connect(micInstance.appInstance.gain);
+        micInstance.node = micInstance.audioInstance.context.createMediaStreamSource(stream);
+        micInstance.node.connect(micInstance.audioInstance.gain);
         window.stream = stream; // make variable available to browser console
       })
       .catch(function(error) {
