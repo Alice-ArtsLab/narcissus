@@ -1,13 +1,14 @@
 'use strict';
 
 class Delay {
-  constructor(context, maxSeconds) {
+  constructor(context, maxSeconds, audio) {
     this.context = context;
     this.node = context.createDelay(maxSeconds);
     this.feedback = context.createGain();
     this.modulation = context.createGain();
     this.hold = context.createGain();
     this.bypass = context.createGain();
+    this.audio = audio;
   }
 
   setAll(time, feedback, modulation) {
@@ -43,13 +44,20 @@ class Delay {
       this.node.delayTime.value = 0;
       this.hold.gain.linearRampToValueAtTime(0.0, this.context.currentTime + 0.1);
       this.bypass.gain.linearRampToValueAtTime(0.0, this.context.currentTime + 0.1);
+      this.bypass.disconnect(this.audio.merger);
+      this.audio.gain.connect(this.audio.merger, 0, 1);
     } else {
+      this.audio.gain.disconnect(this.audio.merger);
+      this.audio.gain.connect(this.context.destination);
+      this.bypass.connect(this.audio.merger, 0, 1);
+
       this.node.delayTime.value = timeValue;
       this.bypass.gain.linearRampToValueAtTime(1.0, this.context.currentTime + 0.1);
 
       if (!holdValue) {
         this.hold.gain.linearRampToValueAtTime(1.0, this.context.currentTime + 0.1);
       }
+
     }
   }
 }
