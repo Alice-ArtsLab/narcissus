@@ -27,10 +27,10 @@ class Audio {
 
     this.gain = this.context.createGain();
     this.delay = new Delay(this.context, 10, this);
-    this.record = new Recorder(this.context, this.delay.bypass);
     this.merger = new ChannelMergerNode(this.context, {
       numberOfInputs: 2
     });
+    this.record = new Recorder(this.context, this.merger);
 
     this.connectNodes();
   }
