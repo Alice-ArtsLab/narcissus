@@ -45,6 +45,7 @@ class Recorder {
 
     recordObj.node.onstop = function(e) {
       recordObj.addHtml(recordObj);
+      recordObj.source.disconnect(recordObj.recordingStream);
 
     }
 
