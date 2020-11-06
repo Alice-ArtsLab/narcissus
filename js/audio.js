@@ -30,7 +30,7 @@ class Audio {
     this.merger = new ChannelMergerNode(this.context, {
       numberOfInputs: 2
     });
-    this.record = new Recorder(this.context, this.merger);
+    this.recorder = new Recorder(this.context, this.merger);
 
     this.connectNodes();
   }

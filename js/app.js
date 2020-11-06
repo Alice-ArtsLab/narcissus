@@ -195,11 +195,19 @@ $(document).ready(function() {
       $("#delay-bypass").trigger("click");
     } else if (e.key == 'h') { // hold
       $("#delay-hold").trigger("click");
+    } else if (e.key == 'r') { // start recorder
+      if (!app.audio.recorder.recording)
+        $("#recorder").trigger("click");
+    } else if (e.key == 'c') { // cancel recorder
+      if (app.audio.recorder.recording)
+        $("#recorder-cancel").trigger("click");
+    } else if (e.key == 's') { // stop recorder
+      if (app.audio.recorder.recording)
+        $("#recorder-stop").trigger("click");
     } else if (e.keyCode == '37') { // previous preset (left arrow)
       $("#button-preset-previous").trigger("click");
     } else if (e.keyCode == '39') {
       $("#button-preset-next").trigger("click");
     } // next preset (right arrow)
-
   }
 });
