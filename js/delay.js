@@ -41,7 +41,7 @@ class Delay {
 
   setBypass(bypassValue, timeValue, holdValue) {
     if (bypassValue) {
-      this.node.delayTime.value = 0;
+      this.setTime(0.0);
       this.hold.gain.linearRampToValueAtTime(0.0, this.context.currentTime + 0.1);
       this.bypass.gain.linearRampToValueAtTime(0.0, this.context.currentTime + 0.1);
       this.bypass.disconnect(this.audio.merger);
@@ -50,8 +50,7 @@ class Delay {
       this.audio.gain.disconnect(this.audio.merger);
       this.audio.gain.connect(this.context.destination);
       this.bypass.connect(this.audio.merger, 0, 1);
-
-      this.node.delayTime.value = timeValue;
+      this.setTime(timeValue);
       this.bypass.gain.linearRampToValueAtTime(1.0, this.context.currentTime + 0.1);
 
       if (!holdValue) {
