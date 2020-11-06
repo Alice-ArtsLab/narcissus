@@ -132,9 +132,11 @@ $(document).ready(function() {
   $("#delay-bypass").on("input", function() {
     let bypassValue = $("#delay-bypass").is(":checked");
     let timeValue = $("#delay-time").val();
+    let feedbackValue = $("#delay-feedback").val();
+    let modulationValue = $("#delay-modulation").val();
     let holdValue = $("#delay-hold").is(":checked");
 
-    app.audio.delay.setBypass(bypassValue, timeValue / 1000, holdValue);
+    app.audio.delay.setBypass(bypassValue, timeValue / 1000, feedbackValue / 100, modulationValue, holdValue);
 
     if (bypassValue) {
       app.disableDelaySlider(true);
