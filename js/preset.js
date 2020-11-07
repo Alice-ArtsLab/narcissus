@@ -29,7 +29,7 @@ class Preset {
           "unit": " ms"
         },
         'feedback': {
-          "value": 20,
+          "value": 25,
           "unit": " %"
         },
         'modulation': {
@@ -43,7 +43,7 @@ class Preset {
           "unit": " ms"
         },
         'feedback': {
-          "value": 40,
+          "value": 50,
           "unit": " %"
         },
         'modulation': {
@@ -57,7 +57,7 @@ class Preset {
           "unit": " ms"
         },
         'feedback': {
-          "value": 60,
+          "value": 75,
           "unit": " %"
         },
         'modulation': {
@@ -71,7 +71,7 @@ class Preset {
           "unit": " ms"
         },
         'feedback': {
-          "value": 40,
+          "value": 50,
           "unit": " %"
         },
         'modulation': {
@@ -85,7 +85,7 @@ class Preset {
           "unit": " ms"
         },
         'feedback': {
-          "value": 60,
+          "value": 75,
           "unit": " %"
         },
         'modulation': {
@@ -99,7 +99,7 @@ class Preset {
           "unit": " ms"
         },
         'feedback': {
-          "value": 60,
+          "value": 75,
           "unit": " %"
         },
         'modulation': {
@@ -113,7 +113,7 @@ class Preset {
           "unit": " ms"
         },
         'feedback': {
-          "value": 60,
+          "value": 75,
           "unit": " %"
         },
         'modulation': {
@@ -127,7 +127,7 @@ class Preset {
           "unit": " ms"
         },
         'feedback': {
-          "value": 60,
+          "value": 75,
           "unit": " %"
         },
         'modulation': {
@@ -141,7 +141,7 @@ class Preset {
           "unit": " ms"
         },
         'feedback': {
-          "value": 60,
+          "value": 75,
           "unit": " %"
         },
         'modulation': {
@@ -155,7 +155,7 @@ class Preset {
           "unit": " ms"
         },
         'feedback': {
-          "value": 60,
+          "value": 75,
           "unit": " %"
         },
         'modulation': {
