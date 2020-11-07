@@ -1,10 +1,10 @@
 'use strict';
 
 class Recorder {
-  constructor(context, source) {
+  constructor(audio) {
     this.recording = false;
     this.currentRecord = 0;
-    this.context = context;
+    this.audio = audio;
     this.recordingStream = false;
     this.node = false;
     this.controls = {
@@ -13,7 +13,9 @@ class Recorder {
       "stop": this.stop
     }
     this.chunks = [];
-    this.source = source;
+    this.source = new ChannelMergerNode(this.audio.context, {
+      numberOfInputs: 2
+    });
 
 
     $("#recording").hide();
@@ -38,15 +40,18 @@ class Recorder {
   start(recordObj) {
     recordObj.recording = true;
     recordObj.chunks = [];
-    recordObj.recordingStream = recordObj.context.createMediaStreamDestination();
+    recordObj.recordingStream = recordObj.audio.context.createMediaStreamDestination();
     recordObj.node = new MediaRecorder(recordObj.recordingStream.stream);
     recordObj.node.start();
+
+    recordObj.audio.gain.connect(recordObj.source, 0, 0);
+    recordObj.audio.delay.bypass.connect(recordObj.source, 0, 1);
+
     recordObj.source.connect(recordObj.recordingStream);
 
     recordObj.node.onstop = function(e) {
       recordObj.addHtml(recordObj);
-      recordObj.source.disconnect(recordObj.recordingStream);
-
+      recordObj.source.disconnect();
     }
 
 
@@ -98,7 +103,7 @@ class Recorder {
       </svg>
     </button></div>`);
     let blob = new Blob(recordObj.chunks, {
-      'type': 'audio/mpeg-3'
+      'type': 'audio/ogg; codecs=opus'
     });
     audio.src = window.URL.createObjectURL(blob);
     recordObj.currentRecord++;
