@@ -15,6 +15,11 @@ class App {
     this.setSlider("#input-gain", 0);
     this.setSliderDisplay("#input-gain-display", 0);
     this.audio.setGain(0);
+
+    this.setSlider("#output-volume-fx", 1);
+    this.setSliderDisplay("#output-volume-fx-display", 1);
+    this.audio.setFxChannel(1);
+
     this.audio.delay.setAll(currentValues["time"]["value"] / 1000,
       currentValues["feedback"]["value"] / 100,
       currentValues["modulation"]["value"]);
@@ -94,6 +99,13 @@ $(document).ready(function() {
     let inputValue = $(this).val();
     app.audio.setGain(inputValue);
     app.setSliderDisplay("#input-gain-display", inputValue);
+  });
+
+  /* Output */
+  $("#output-fx-volume").on("input", function() {
+    let value = $(this).val();
+    app.audio.setFxChannel(value);
+    app.setSliderDisplay("#output-fx-volume-display", value);
   });
 
   /* Delay */

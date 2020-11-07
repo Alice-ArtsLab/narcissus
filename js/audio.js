@@ -9,6 +9,7 @@ class Audio {
     this.delay = null;
     this.merger = null;
     this.recorder = null;
+    this.fxChannel = null;
   }
 
   start() {
@@ -26,11 +27,12 @@ class Audio {
     }
 
     this.gain = this.context.createGain();
+    this.fxChannel = this.context.createGain();
     this.delay = new Delay(this.context, 10, this);
     this.merger = new ChannelMergerNode(this.context, {
       numberOfInputs: 2
     });
-    this.recorder = new Recorder(this.context, this.merger);
+    this.recorder = new Recorder(this);
 
     this.connectNodes();
   }
@@ -42,6 +44,10 @@ class Audio {
 
   setGain(value) {
     this.gain.gain.value = parseFloat(value);
+  }
+
+  setFxChannel(value) {
+    this.fxChannel.gain.value = parseFloat(value);
   }
 
   setInput(constructor) {
@@ -58,7 +64,8 @@ class Audio {
     this.gain.connect(this.delay.hold);
     this.delay.hold.connect(this.delay.node);
     this.delay.node.connect(this.delay.bypass);
-    this.delay.bypass.connect(this.merger, 0, 1);
+    this.delay.bypass.connect(this.fxChannel);
+    this.fxChannel.connect(this.merger, 0, 1);
     this.delay.node.connect(this.delay.feedback);
     this.delay.feedback.connect(this.delay.node);
     this.merger.connect(this.context.destination);

@@ -45,12 +45,12 @@ class Delay {
       this.setTime(0.0);
       this.hold.gain.linearRampToValueAtTime(0.0, this.context.currentTime + 0.1);
       this.bypass.gain.linearRampToValueAtTime(0.0, this.context.currentTime + 0.1);
-      this.bypass.disconnect(this.audio.merger, 0, 1);
-      this.audio.gain.connect(this.audio.merger, 0, 1);
+      this.bypass.disconnect();
+      this.audio.gain.connect(this.audio.fxChannel);
+      this.audio.gain.connect(this.audio.recorder.source, 0, 1);
     } else {
-      this.audio.gain.disconnect(this.audio.merger, 0, 1);
-      this.bypass.connect(this.audio.merger, 0, 1);
-
+      this.audio.gain.disconnect(this.audio.fxChannel);
+      this.audio.gain.disconnect(this.audio.recorder.source, 0, 1);
 
       this.node.disconnect();
       this.node = this.context.createDelay(this.maxSeconds);
@@ -59,10 +59,10 @@ class Delay {
       this.setFeedback(feedbackValue);
       this.setModulation(modulationValue);
 
-      this.audio.gain.connect(this.hold);
       this.hold.connect(this.node);
       this.node.connect(this.bypass);
-      this.bypass.connect(this.audio.merger, 0, 1);
+      this.bypass.connect(this.audio.fxChannel);
+      this.bypass.connect(this.audio.recorder.source, 0, 1);
       this.node.connect(this.feedback);
       this.feedback.connect(this.node);
 

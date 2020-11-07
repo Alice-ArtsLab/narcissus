@@ -45,7 +45,7 @@
           <div id="microphone">
             <label>Gain</label>
             <div class="float-right">
-              <span id="input-gain-display" for="delay-gain" class="text-primary" type="number">0.0</span>
+              <span id="input-gain-display" for="input-gain" class="text-primary" type="number">0.0</span>
             </div>
             <input id="input-gain" name="app-slider" type="range" class="custom-range" min="0.0" max="2.0" step="0.01">
           </div>
@@ -65,9 +65,25 @@
         </div>
       </div>
     </div>
+    <br />
+    <div class="card" id="output-card">
+      <div class="card-header">Output
+      </div>
+      <div class="card-body">
+        <div>
+          <label>Volume (FX channel)</label>
+          <div class="float-right">
+            <span id="output-fx-volume-display" for="output-fx-volume" class="text-primary" type="number">1.0</span>
+          </div>
+          <input id="output-fx-volume" name="app-slider" type="range" class="custom-range" min="0.0" max="2.0" step="0.01">
+        </div>
+
+
+      </div>
+    </div>
 
     <br />
-    <div class="card" id="input-card">
+    <div class="card" id="recorder-card">
       <div class="card-header">Recorder
       </div>
       <div class="card-body">
@@ -195,7 +211,7 @@
             <div class="col-sm-10">
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="gridRadios" id="settins-input-microphone" checked>
-                <label class="form-check-label" for="ettins-input-microphone">
+                <label class="form-check-label" for="settins-input-microphone">
                   Microphone
                 </label>
 
