@@ -8,6 +8,7 @@ class App {
   }
 
   start() {
+    request_MIDI();
     this.audio.start();
     this.preset.load();
     this.settings();
@@ -159,17 +160,21 @@ $(document).ready(function() {
 
   /* Preset */
   $("#button-preset-previous").click(function() {
-    let currentPreset = app.preset.list[app.preset.previous()];
+    let index = app.preset.previous();
+    let currentPreset = app.preset.list[index];
     app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
       currentPreset["feedback"]["value"] / 100,
       currentPreset["modulation"]["value"]);
+      $("preset_number").innerHTML = index;
   });
 
   $("#button-preset-next").click(function() {
-    let currentPreset = app.preset.list[app.preset.next()];
+    let index = app.preset.next();
+    let currentPreset = app.preset.list[index];
     app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
       currentPreset["feedback"]["value"] / 100,
       currentPreset["modulation"]["value"]);
+      $("preset_number").innerHTML = index;
   });
 
   $("#button-preset-add").click(function() {
