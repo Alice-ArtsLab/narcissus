@@ -15,7 +15,7 @@ function MidiSuccess(midi) {
 
      midi.onstatechange = function(e) {
        // Print information about the (dis)connected MIDI controller
-        document.getElementById("result").innerHTML = e.port.name + e.port.manufacturer + e.port.state + "<br />";
+        console.log(e.port.name + e.port.manufacturer + e.port.state);
      };
 
     for (var input = inputs.next(); input && !input.done; input = inputs.next()) {
@@ -44,41 +44,24 @@ function MidiMessage (message) {
 //        console.log("CTRL" + [message.data[1] + " , " + message.data[2]]);
 
     if (message.data[1] == 6) { // bypass
-      $("#delay-bypass").trigger("click");
-      return;
-    } else if (message.data[1] == 7) { // hold
       $("#delay-hold").trigger("click");
       return;
-    } else if (message.data[1] == 8 && message.data[2] == 0) { // start recorder
-      if (!app.audio.recorder.recording){
-        $("#recorder").trigger("click");
-        return;
-        }
-    } else if (message.data[1] == 8 && message.data[2] == 127) { // cancel recorder
-      if (app.audio.recorder.recording){
-            $("#recorder-cancel").trigger("click");
-            return;
-        }
-    } else if (message.data[1] == 8 && message.data[2] == 127) { // stop recorder
-      if (app.audio.recorder.recording){
-        $("#recorder-stop").trigger("click");
-        return;
-        }
-    } else if (message.data[1] == 2 ) { // previous preset (left arrow)
+    } else if (message.data[1] == 7) { // hold
+      $("#delay-bypass").trigger("click");
+      return;
+    } else if (message.data[1] == 9 && message.data[2] === 127) { // previous preset (left arrow)
       $("#button-preset-previous").trigger("click");
       return;
-    } else if (message.data[1] == 1) {
+    } else if (message.data[1] == 10 && message.data[2] === 127) {
       $("#button-preset-next").trigger("click");
       return;
-    } else if (message.data[1] == 11 || message.data[1] == 12){ // Volume
+    } else if (message.data[1] == 11){ // Volume
         var gain = message.data[2] / 127.0 * 2.0;
-        $("#output-fx-volume").trigger("input", gain);
+        $("#output-fx-volume").val(gain);
+        $("#output-fx-volume").trigger("input");
         return;
     }
   }
-
-
-    }
     // Not used
     // (message.data[0] === 176 )//Drum pad
     // (message.data[0] === 208 )//Aftertouch

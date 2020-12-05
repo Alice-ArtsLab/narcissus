@@ -165,7 +165,7 @@ $(document).ready(function() {
     app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
       currentPreset["feedback"]["value"] / 100,
       currentPreset["modulation"]["value"]);
-      $("preset_number").innerHTML = index;
+      $("#preset_number").html(index);
   });
 
   $("#button-preset-next").click(function() {
@@ -174,7 +174,7 @@ $(document).ready(function() {
     app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
       currentPreset["feedback"]["value"] / 100,
       currentPreset["modulation"]["value"]);
-      $("preset_number").innerHTML = index;
+      $("#preset_number").html(index);
   });
 
   $("#button-preset-add").click(function() {
