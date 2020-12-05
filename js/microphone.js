@@ -31,7 +31,7 @@ class Mic {
     function errorMsg(msg, error) {
       //errorElement.innerHTML += '<p>' + msg + '</p>';
       if (typeof error !== 'undefined') {
-        console.error(error);
+        console.log(error);
       }
     }
   }
