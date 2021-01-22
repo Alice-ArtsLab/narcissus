@@ -56,7 +56,8 @@ function MidiMessage (message) {
       $("#button-preset-next").trigger("click");
       return;
     } else if (message.data[1] == 11){ // Volume
-        var gain = message.data[2] / 127.0 * 2.0;
+        var gain = message.data[2] / 127.0; // [0, 1]
+        gain = pow(gain, 2) * 2; //  [0, 2] smoothed
         $("#output-fx-volume").val(gain);
         $("#output-fx-volume").trigger("input");
         return;
@@ -66,4 +67,3 @@ function MidiMessage (message) {
     // (message.data[0] === 176 )//Drum pad
     // (message.data[0] === 208 )//Aftertouch
 }
-
