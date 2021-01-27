@@ -6,7 +6,7 @@ class Delay {
     this.context = context;
     this.node = context.createDelay(maxSeconds);
     this.feedback = context.createGain();
-    this.modulation = context.createGain();
+    this.modulation = new Modulation(context);
     this.hold = context.createGain();
     this.bypass = context.createGain();
     this.audio = audio;
@@ -27,7 +27,9 @@ class Delay {
   }
 
   setModulation(value) {
-    this.modulation.gain.linearRampToValueAtTime(value, this.context.currentTime + 0.1);
+    let dict = this.modulation.getModulationParam()
+    dict['rate'] = value;
+    this.modulation.setModulationParam(dict)
   }
 
   setHold(holdValue, feedbackValue) {

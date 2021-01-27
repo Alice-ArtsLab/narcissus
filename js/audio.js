@@ -63,7 +63,8 @@ class Audio {
     this.gain.connect(this.merger, 0, 0);
     this.gain.connect(this.delay.hold);
     this.delay.hold.connect(this.delay.node);
-    this.delay.node.connect(this.delay.bypass);
+    this.delay.node.connect(this.delay.modulation.node.INPUT);
+    this.delay.modulation.connect(this.delay.bypass);
     this.delay.bypass.connect(this.fxChannel);
     this.fxChannel.connect(this.merger, 0, 1);
     this.delay.node.connect(this.delay.feedback);

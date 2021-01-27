@@ -133,7 +133,7 @@
         <div class="float-right">
           <span id="delay-modulation-display" for="delay-modulation" class="text-primary" type="number">0.0</span>
         </div>
-        <input id="delay-modulation" name="app-slider" type="range" class="custom-range" min="0" max="100" step="0.1">
+        <input id="delay-modulation" name="app-slider" type="range" class="custom-range" min="0" max="10" step="0.01">
 
         <div class="row justify-content-around">
           <div class="col-3 custom-control custom-switch" data-toggle="tooltip" title="Shortcut: h">
@@ -152,45 +152,46 @@
 
     <br />
     <div class="card">
-      <div class="card-header">Presets <span id="preset_number">0</div></div>
-      <div class="card-body">
-        <div align=right>
-          <button id="button-preset-previous" class="btn" data-toggle="tooltip" title="Shortcut: Arrow left">
-            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-            </svg>
-          </button>
+      <div class="card-header">Presets <span id="preset_number">0</div>
+    </div>
+    <div class="card-body">
+      <div align=right>
+        <button id="button-preset-previous" class="btn" data-toggle="tooltip" title="Shortcut: Arrow left">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-chevron-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+          </svg>
+        </button>
 
-          <button id="button-preset-next" class="btn" data-toggle="tooltip" title="Shortcut: Arrow right">
-            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-            </svg>
-          </button>
+        <button id="button-preset-next" class="btn" data-toggle="tooltip" title="Shortcut: Arrow right">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+          </svg>
+        </button>
 
-          <button id="button-preset-add" class="btn"><svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
-              <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
-            </svg>
-          </button>
-          <br />
-          <br />
-        </div>
-        <div class="table-responsive">
-          <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Preset</th>
-                <th scope="col">Delete</th>
-              </tr>
-            </thead>
-            <tbody id="presets">
+        <button id="button-preset-add" class="btn"><svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z" />
+            <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z" />
+          </svg>
+        </button>
+        <br />
+        <br />
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Preset</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody id="presets">
 
-            </tbody>
-          </table>
-        </div>
+          </tbody>
+        </table>
       </div>
     </div>
+  </div>
   </div>
 
   <!-- Modal -->
@@ -233,13 +234,15 @@
   </div>
 
   <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS, then XSound -->
   <script src="js/jquery/jquery-3.5.1.slim.min.js"></script>
   <script src="js/popper/popper.min.js"></script>
   <script src="js/bootstrap/bootstrap.min.js"></script>
   <script src="js/webaudio-controls/webaudio-controls.js"></script>
+  <script src="js/XSound/xsound.min.js"></script>
 
   <!-- Narcissus JS -->
+  <script src="js/modulation.js"></script>
   <script src="js/delay.js"></script>
   <script src="js/microphone.js"></script>
   <script src="js/player.js"></script>
