@@ -57,7 +57,7 @@ function MidiMessage (message) {
       return;
     } else if (message.data[1] == 11){ // Volume
         var gain = message.data[2] / 127.0; // [0, 1]
-        gain = pow(gain, 2) * 2; //  [0, 2] smoothed
+        gain = Math.pow(gain, 2) * 2; //  [0, 2] smoothed
         $("#output-fx-volume").val(gain);
         $("#output-fx-volume").trigger("input");
         return;
