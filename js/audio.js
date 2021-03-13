@@ -9,6 +9,8 @@ class Audio {
     this.delay = null;
     this.merger = null;
     this.recorder = null;
+    this.reverb = null;
+    this.vibrato = null;
     this.fxChannel = null;
   }
 
@@ -33,7 +35,8 @@ class Audio {
       numberOfInputs: 2
     });
     this.recorder = new Recorder(this);
-
+    this.reverb = new Reverb(this.context);
+    this.vibrato = new Vibrato(this.context);
     this.connectNodes();
   }
 
@@ -63,12 +66,13 @@ class Audio {
     this.gain.connect(this.merger, 0, 0);
     this.gain.connect(this.delay.hold);
     this.delay.hold.connect(this.delay.node);
-    this.delay.node.connect(this.delay.modulation.node.INPUT);
-    this.delay.modulation.connect(this.delay.bypass);
+    this.delay.node.connect(this.vibrato.node);
+    this.vibrato.connect(this.delay.bypass);
     this.delay.bypass.connect(this.fxChannel);
     this.fxChannel.connect(this.merger, 0, 1);
     this.delay.node.connect(this.delay.feedback);
     this.delay.feedback.connect(this.delay.node);
-    this.merger.connect(this.context.destination);
+    this.merger.connect(this.reverb.node);
+    this.reverb.connect(this.context.destination);
   }
 }
