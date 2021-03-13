@@ -123,7 +123,7 @@ $(document).ready(function() {
       app.audio.delay.setFeedback(value / 100);
       unit = " %";
     } else if (displayId.includes("modulation")) {
-      app.audio.delay.setModulation(value);
+      app.audio.vibrato.setVibrato(value);
     }
     app.setSliderDisplay(displayId, value.toString() + unit);
   });
