@@ -65,6 +65,28 @@
         </div>
       </div>
     </div>
+
+    <br />
+    <div class="card" id="reverb-card">
+      <div class="card-header">Reverb
+      </div>
+      <div class="card-body">
+        <div>
+          <script>
+            function getval(sel) {
+              app.audio.reverb.setReverb(sel.value);
+            }
+          </script>
+          <label for="reverb-room">Choose room</label>
+          <select onchange='getval(this);' class="form-control" id="reverb-room">
+
+          </select>
+        </div>
+
+
+      </div>
+    </div>
+
     <br />
     <div class="card" id="output-card">
       <div class="card-header">Output
@@ -77,8 +99,6 @@
           </div>
           <input id="output-fx-volume" name="app-slider" type="range" class="custom-range" min="0.0" max="2.0" step="0.01">
         </div>
-
-
       </div>
     </div>
 
