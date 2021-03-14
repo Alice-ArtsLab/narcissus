@@ -8,7 +8,7 @@ class Reverb {
   }
 
   async createReverb() {
-    let response     = await fetch("/static/samples/StNicolaesChurch.wav");
+    let response     = await fetch("static/samples/StNicolaesChurch.wav");
     let arraybuffer  = await response.arrayBuffer();
       this.node.buffer = await this.context.decodeAudioData(arraybuffer);
   }

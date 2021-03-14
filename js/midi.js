@@ -10,12 +10,12 @@ function request_MIDI(){
 // midi functions
 function MidiSuccess(midi) {
     // when we get a succesful response, run this code
-    console.log('MIDI Access Object' + midi);
+    // console.log('MIDI Access Object' + midi);
     var inputs = midi.inputs.values();
 
      midi.onstatechange = function(e) {
        // Print information about the (dis)connected MIDI controller
-        console.log(e.port.name + e.port.manufacturer + e.port.state);
+        //console.log(e.port.name + e.port.manufacturer + e.port.state);
      };
 
     for (var input = inputs.next(); input && !input.done; input = inputs.next()) {
@@ -39,31 +39,42 @@ function MidiMessage (message) {
     }
 
 
-    //Ctrl
-    if (message.data[0] === 176 ){
+    // Not used
+    // (message.data[0] === 176 )//Drum pad
+    // (message.data[0] === 208 )//Aftertouch
+
+    // If not Ctrl
+    if (message.data[0] !== 176 )
+        return
+
 //        console.log("CTRL" + [message.data[1] + " , " + message.data[2]]);
 
-    if (message.data[1] == 6) { // bypass
-      $("#delay-hold").trigger("click");
+    if (message.data[1] === 6) { // hold
+      $("#delay-hold").click();
+//      console.log("Hold");
       return;
-    } else if (message.data[1] == 7) { // hold
-      $("#delay-bypass").trigger("click");
+    }
+    if (message.data[1] === 7) { // bypass
+      $("#delay-bypass").click();
+//      console.log("Bypass");
       return;
-    } else if (message.data[1] == 9 && message.data[2] === 127) { // previous preset (left arrow)
-      $("#button-preset-previous").trigger("click");
+    }
+    if (message.data[1] === 9 && message.data[2] === 127) { // previous preset (left arrow)
+      $("#button-preset-previous").click();
+//      console.log("Preset previous");
       return;
-    } else if (message.data[1] == 10 && message.data[2] === 127) {
-      $("#button-preset-next").trigger("click");
+    }
+    if (message.data[1] === 10 && message.data[2] === 127) {
+      $("#button-preset-next").click();
+//      console.log("preset next");
       return;
-    } else if (message.data[1] == 11){ // Volume
+    }
+    if (message.data[1] === 11){ // Volume
+//        console.log("volume " + message.data[2]);
         var gain = message.data[2] / 127.0; // [0, 1]
         gain = Math.pow(gain, 2) * 2; //  [0, 2] smoothed
         $("#output-fx-volume").val(gain);
         $("#output-fx-volume").trigger("input");
         return;
     }
-  }
-    // Not used
-    // (message.data[0] === 176 )//Drum pad
-    // (message.data[0] === 208 )//Aftertouch
 }

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="pragma" content="no-cache" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="css/custom.css">
+
+  <title> MIDI Control to Narcissus</title>
+</head>
+
+<body>
+This is a control to experiment MIDI messages developed to help the development of an application to recreate Narcissus Piece.
+<br>
+<button onclick="request_MIDI()"> Enable MIDI application</button>
+<br />
+
+Pedals<br >
+
+<button onclick="button(1);">1</button>
+<button onclick="button(2);">2</button>
+<button onclick="button(3);">3</button>
+<button onclick="button(4);">4</button>
+<button onclick="button(5);">5</button>
+<button onclick="button(6);">6 HOLD</button>
+<button onclick="button(7);">7 BYPASS</button>
+<button onclick="button(8);">8</button>
+<button onclick="button(9);">9 PREVIOUS</button>
+<button onclick="button(10);">0 NEXT</button>
+
+<br>
+Volume 1 <br>
+<input type="range" min="0" max="127" value="0" class="slider" id="volume1" onchange="button(11);"><br>
+
+<br>
+Volume 2 <br>
+<input type="range" min="0" max="127" value="0" class="slider" id="volume2" onchange="button(12);"><br>
+
+
+    <script>
+
+    midiOut = [];
+
+    // Example from http://webmidi-examples.glitch.me/
+    function button(number){
+      const NOTE_ON = 144; //0x90;
+      const NOTE_OFF = 128; //0x80;
+      const CONTROL = 176; //0xB0;
+
+//        6 = HOLD
+//        7 = bypass
+//        9 = previous preset
+//        10 = next preset
+//        11 = Volume
+
+      var value = 127;
+
+      if (number == 11)
+        value = document.getElementById("volume1").value;
+
+      if (number == 12)
+        value = document.getElementById("volume2").value;
+
+      const message = [CONTROL, number, value];
+
+      for (var i = 0 ; i < midiOut.length ; i++)
+          midiOut[i].send(message); 
+    }
+
+    function console_log(message){
+        var el = document.getElementById("log");
+        el.innerHTML += message + "<br>";
+    }
+
+    function request_MIDI(){
+        if (navigator.requestMIDIAccess) {
+            navigator.requestMIDIAccess({sysex: true}).then(MidiSuccess, MidiFailure);
+        } else {
+            console_log("No MIDI support in your browser.");
+        }
+    }
+
+// midi functions
+
+function MidiSuccess(midi_instance) {
+    midi = midi_instance;
+    // when we get a succesful response, run this code
+    console_log('MIDI Access Object' + midi);
+    const inputs = midi.inputs.values();
+    const outputs = midi.outputs.values();
+
+    console_log("midi.inputs");
+    console_log(inputs);
+    console_log("midi.outputs");
+    console_log(outputs);
+
+    console_log("controllers");
+     midi.onstatechange = function(e) {
+       // Print information about the (dis)connected MIDI controller
+        console_log(e.port.name + e.port.manufacturer + e.port.state);
+     };
+
+    for (var input = inputs.next(); input && !input.done; input = inputs.next()) {
+        // each time there is a midi message call the onMIDIMessage function
+        input.value.onmidimessage = MidiMessage;
+    }
+
+    // MIDI devices that you send data to.
+    for (let output = outputs.next(); output && !output.done; output = outputs.next()) {
+        midiOut.push(output.value);
+    }
+}
+
+function MidiFailure(e) {
+    // when we get a failed response, run this code
+    console_log(e);
+}
+
+function MidiMessage (message) {
+    //Note On
+    if((message.data[0] == 144 && message.data[2] > 0) ||
+    // Note Off
+    (message.data[0] === 128 || (message.data[0] == 144 && message.data[2] === 0))
+    ){
+                console_log("NOTE" + [message.data[1] + " , " + message.data[2]]);
+    }
+
+
+    //Ctrl
+    if (message.data[0] === 176 ){
+        console_log("CTRL" + [message.data[1] + " , " + message.data[2]]);
+    }
+    // Not used
+    // (message.data[0] === 176 )//Drum pad
+    // (message.data[0] === 208 )//Aftertouch
+}
+        request_MIDI();
+    </script>
+    <div id="log">
+    </div>
+</body>
+
+</html>
