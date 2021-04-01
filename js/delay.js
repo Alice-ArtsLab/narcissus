@@ -11,10 +11,9 @@ class Delay {
     this.audio = audio;
   }
 
-  setAll(time, feedback, modulation) {
+  setAll(time, feedback) {
     this.setTime(time);
     this.setFeedback(feedback);
-    this.setModulation(modulation);
   }
 
   setTime(value) {
@@ -25,9 +24,6 @@ class Delay {
     this.feedback.gain.linearRampToValueAtTime(value, this.context.currentTime + 0.1);
   }
 
-  setModulation(value) {
-    
-  }
 
   setHold(holdValue, feedbackValue) {
     if (holdValue) {
@@ -39,7 +35,7 @@ class Delay {
     }
   }
 
-  setBypass(bypassValue, timeValue, feedbackValue, modulationValue, holdValue) {
+  setBypass(bypassValue, timeValue, feedbackValue, holdValue) {
     if (bypassValue) {
       this.setTime(0.0);
       this.hold.gain.linearRampToValueAtTime(0.0, this.context.currentTime + 0.1);
@@ -56,7 +52,6 @@ class Delay {
 
       this.setTime(timeValue);
       this.setFeedback(feedbackValue);
-      this.setModulation(modulationValue);
 
       this.hold.connect(this.node);
       this.node.connect(this.bypass);

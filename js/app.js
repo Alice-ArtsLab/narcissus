@@ -21,9 +21,20 @@ class App {
     this.setSliderDisplay("#output-volume-fx-display", 1);
     this.audio.setFxChannel(1);
 
-    this.audio.delay.setAll(currentValues["time"]["value"] / 1000,
-      currentValues["feedback"]["value"] / 100,
-      currentValues["modulation"]["value"]);
+    this.audio.delay.setAll(currentValues["time"]["value"] / 1000.0,
+      currentValues["feedback"]["value"] / 100.0);
+
+    this.setSlider("#modulation-freq",
+      currentValues["modulation-freq"]["value"]);
+    this.setSliderDisplay("#modulation-freq-display",
+      currentValues["modulation-freq"]["value"]);
+    this.setSlider("#modulation-depth",
+      currentValues["modulation-depth"]["value"]);
+    this.setSliderDisplay("#modulation-depth-display",
+      currentValues["modulation-depth"]["value"]);
+
+    this.audio.vibrato.setAll(currentValues["modulation-freq"]["value"],
+      currentValues["modulation-depth"]["value"]);
   }
 
   setSliderDisplay(id, value) {
@@ -36,7 +47,6 @@ class App {
   disableDelaySlider(value) {
     $("#delay-time").prop("disabled", value);
     $("#delay-feedback").prop("disabled", value);
-    $("#delay-modulation").prop("disabled", value);
   }
 
   settings() {
@@ -110,7 +120,7 @@ $(document).ready(function() {
   });
 
   /* Delay */
-  $("#app-content").delegate("input[name='app-slider']", 'input', function() {
+  $("#app-content").delegate("input[name='delay-slider']", 'input', function() {
     let inputId = "#" + $(this).attr("id").toString();
     let value = $(this).val();
 
@@ -122,8 +132,6 @@ $(document).ready(function() {
     } else if (displayId.includes("feedback")) {
       app.audio.delay.setFeedback(value / 100);
       unit = " %";
-    } else if (displayId.includes("modulation")) {
-      //app.audio.vibrato.setVibrato(value);
     }
     app.setSliderDisplay(displayId, value.toString() + unit);
   });
@@ -146,10 +154,9 @@ $(document).ready(function() {
     let bypassValue = $("#delay-bypass").is(":checked");
     let timeValue = $("#delay-time").val();
     let feedbackValue = $("#delay-feedback").val();
-    let modulationValue = $("#delay-modulation").val();
     let holdValue = $("#delay-hold").is(":checked");
 
-    app.audio.delay.setBypass(bypassValue, timeValue / 1000, feedbackValue / 100, modulationValue, holdValue);
+    app.audio.delay.setBypass(bypassValue, timeValue / 1000, feedbackValue / 100, holdValue);
 
     if (bypassValue) {
       app.disableDelaySlider(true);
@@ -158,13 +165,36 @@ $(document).ready(function() {
     }
   });
 
+  /* Modulation */
+  $("#app-content").delegate("input[name='modulation-slider']", 'input', function() {
+    let inputId = "#" + $(this).attr("id").toString();
+    let value = $(this).val();
+
+    let displayId = "#" + $(this).attr("id").toString() + "-display";
+    let unit = "";
+    if (displayId.includes("freq")) {
+      app.audio.vibrato.setFreq(value);
+      unit = " hz";
+    } else if (displayId.includes("depth")) {
+      app.audio.vibrato.setDepth(value);
+      unit = " semitones";
+      if (value == 1) {
+        unit = " semitone";
+      }
+    }
+    app.setSliderDisplay(displayId, value.toString() + unit);
+  });
+
   /* Preset */
   $("#button-preset-previous").click(function() {
     let index = app.preset.previous();
     let currentPreset = app.preset.list[index];
     app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
-      currentPreset["feedback"]["value"] / 100,
-      currentPreset["modulation"]["value"]);
+      currentPreset["feedback"]["value"] / 100);
+
+    app.audio.vibrato.setAll(currentPreset["modulation-freq"]["value"],
+      currentPreset["modulation-depth"]["value"]);
+
       $("#preset_number").html(index);
   });
 
@@ -172,8 +202,10 @@ $(document).ready(function() {
     let index = app.preset.next();
     let currentPreset = app.preset.list[index];
     app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
-      currentPreset["feedback"]["value"] / 100,
-      currentPreset["modulation"]["value"]);
+      currentPreset["feedback"]["value"] / 100);
+
+    app.audio.vibrato.setAll(currentPreset["modulation-freq"]["value"],
+      currentPreset["modulation-depth"]["value"]);
       $("#preset_number").html(index);
   });
 
@@ -182,8 +214,10 @@ $(document).ready(function() {
     if (newPresetId == app.preset.current) {
       let currentPreset = app.preset.list[newPresetId];
       app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
-        currentPreset["feedback"]["value"] / 100,
-        currentPreset["modulation"]["value"]);
+        currentPreset["feedback"]["value"] / 100);
+
+      app.audio.vibrato.setAll(currentPreset["modulation-freq"]["value"],
+        currentPreset["modulation-depth"]["value"]);
     }
   });
 
@@ -194,11 +228,27 @@ $(document).ready(function() {
   $("#presets").delegate("input[name='preset-slider']", 'input', function() {
     let displayId = "#" + $(this).attr("id").toString() + "-display";
     let unit = "";
+    let presetID = $(this).attr("preset-id");
+
     if (displayId.includes("time")) {
       unit = " ms";
+      app.preset.list[presetID]["time"]["value"] = $(this).val();
+
     } else if (displayId.includes("feedback")) {
       unit = " %";
+      app.preset.list[presetID]["feedback"]["value"] = $(this).val();
+
+    } else if (displayId.includes("modulation-freq")) {
+      unit = " hz";
+      app.preset.list[presetID]["modulation-freq"]["value"] = $(this).val();
+
+    } else if (displayId.includes("modulation-depth")) {
+      unit = " semitones";
+      app.preset.list[presetID]["modulation-depth"]["value"] = $(this).val();
     }
+
+
+
     $(displayId).text($(this).val().toString() + unit);
 
   });
