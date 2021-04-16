@@ -233,11 +233,12 @@ $(document).ready(function() {
       app.preset.list[presetID]["feedback"]["value"] = $(this).val();
 
     } else if (displayId.includes("modulation-rate")) {
-      unit = " hz";
+      unit = "";
+      
       app.preset.list[presetID]["modulation-rate"]["value"] = $(this).val();
 
     } else if (displayId.includes("modulation-depth")) {
-      unit = " semitones";
+      unit = "";
       app.preset.list[presetID]["modulation-depth"]["value"] = $(this).val();
     }
 
