@@ -54,7 +54,8 @@ class Delay {
       this.setFeedback(feedbackValue);
 
       this.hold.connect(this.node);
-      this.node.connect(this.bypass);
+      this.node.connect(this.audio.flanger.node.INPUT);
+      this.audio.flanger.connect(this.bypass);
       this.bypass.connect(this.audio.fxChannel);
       this.bypass.connect(this.audio.recorder.source, 0, 1);
       this.node.connect(this.feedback);
