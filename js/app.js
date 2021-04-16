@@ -234,6 +234,7 @@ $(document).ready(function() {
 
     } else if (displayId.includes("modulation-rate")) {
       unit = "";
+      
       app.preset.list[presetID]["modulation-rate"]["value"] = $(this).val();
 
     } else if (displayId.includes("modulation-depth")) {
