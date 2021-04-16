@@ -10,7 +10,7 @@ class Audio {
     this.merger = null;
     this.recorder = null;
     this.reverb = null;
-    this.vibrato = null;
+    this.flanger = null;
     this.fxChannel = null;
   }
 
@@ -36,7 +36,7 @@ class Audio {
     });
     this.recorder = new Recorder(this);
     this.reverb = new Reverb(this.context);
-    this.vibrato = new Vibrato(this.context);
+    this.flanger = new Flanger(this.context);
     this.connectNodes();
   }
 
@@ -66,8 +66,8 @@ class Audio {
     this.gain.connect(this.merger, 0, 0);
     this.gain.connect(this.delay.hold);
     this.delay.hold.connect(this.delay.node);
-    this.delay.node.connect(this.vibrato.node);
-    this.vibrato.connect(this.delay.bypass);
+    this.delay.node.connect(this.flanger.node.INPUT);
+    this.flanger.connect(this.delay.bypass);
     this.delay.bypass.connect(this.fxChannel);
     this.fxChannel.connect(this.merger, 0, 1);
     this.delay.node.connect(this.delay.feedback);
