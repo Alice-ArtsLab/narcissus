@@ -18,13 +18,14 @@ class Preset {
           "value": 0.0,
           "unit": " %"
         },
-        'modulation-rate': {
+        'modulation-freq': {
           "value": 0.0,
-          "unit": ""
+          "unit": " hz"
+
         },
         'modulation-depth': {
           "value": 0.0,
-          "unit": ""
+          "unit": " semitones"
         }
       },
       {
@@ -36,13 +37,13 @@ class Preset {
           "value": 25.0,
           "unit": " %"
         },
-        'modulation-rate': {
+        'modulation-freq': {
           "value": 0.0,
-          "unit": ""
+          "unit": " hz"
         },
         'modulation-depth': {
           "value": 0.0,
-          "unit": ""
+          "unit": " semitones"
         }
       },
       {
@@ -54,13 +55,13 @@ class Preset {
           "value": 50.0,
           "unit": " %"
         },
-        'modulation-rate': {
+        'modulation-freq': {
           "value": 0.0,
-          "unit": ""
+          "unit": " hz"
         },
         'modulation-depth': {
           "value": 0.0,
-          "unit": ""
+          "unit": " semitones"
         }
       },
       {
@@ -72,13 +73,13 @@ class Preset {
           "value": 75.0,
           "unit": " %"
         },
-        'modulation-rate': {
+        'modulation-freq': {
           "value": 0.0,
-          "unit": ""
+          "unit": " hz"
         },
         'modulation-depth': {
           "value": 0.0,
-          "unit": ""
+          "unit": " semitones"
         }
       },
       {
@@ -90,13 +91,13 @@ class Preset {
           "value": 50.0,
           "unit": " %"
         },
-        'modulation-rate': {
+        'modulation-freq': {
           "value": 0.0,
-          "unit": ""
+          "unit": " hz"
         },
         'modulation-depth': {
           "value": 0.0,
-          "unit": ""
+          "unit": " semitones"
         }
       },
       {
@@ -108,13 +109,13 @@ class Preset {
           "value": 75.0,
           "unit": " %"
         },
-        'modulation-rate': {
+        'modulation-freq': {
           "value": 0.0,
-          "unit": ""
+          "unit": " hz"
         },
         'modulation-depth': {
           "value": 0.0,
-          "unit": ""
+          "unit": " semitones"
         }
       },
       {
@@ -126,13 +127,13 @@ class Preset {
           "value": 75.0,
           "unit": " %"
         },
-        'modulation-rate': {
-          "value": 1.6,
-          "unit": ""
+        'modulation-freq': {
+          "value": 3,
+          "unit": " hz"
         },
         'modulation-depth': {
-          "value": 0.35,
-          "unit": ""
+          "value": 1.0,
+          "unit": " semitones"
         }
       },
       {
@@ -144,13 +145,13 @@ class Preset {
           "value": 75.0,
           "unit": " %"
         },
-        'modulation-rate': {
-          "value": 2.55,
-          "unit": ""
+        'modulation-freq': {
+          "value": 6.0,
+          "unit": " hz"
         },
         'modulation-depth': {
-          "value": 0.35,
-          "unit": ""
+          "value": 2.0,
+          "unit": " semitones"
         }
       },
       {
@@ -162,13 +163,13 @@ class Preset {
           "value": 75.0,
           "unit": " %"
         },
-        'modulation-rate': {
-          "value": 2.55,
-          "unit": ""
+        'modulation-freq': {
+          "value": 6.0,
+          "unit": " hz"
         },
         'modulation-depth': {
-          "value": 0.35,
-          "unit": ""
+          "value": 2.0,
+          "unit": " semitones"
         }
       },
       {
@@ -180,13 +181,13 @@ class Preset {
           "value": 75.0,
           "unit": " %"
         },
-        'modulation-rate': {
-          "value": 1.6,
-          "unit": ""
+        'modulation-freq': {
+          "value": 3.0,
+          "unit": " hz"
         },
         'modulation-depth': {
-          "value": 0.35,
-          "unit": ""
+          "value": 1.0,
+          "unit": " semitones"
         }
       },
       {
@@ -198,13 +199,13 @@ class Preset {
           "value": 75.0,
           "unit": " %"
         },
-        'modulation-rate': {
+        'modulation-freq': {
           "value": 0.0,
-          "unit": ""
+          "unit": " hz"
         },
         'modulation-depth': {
           "value": 0.0,
-          "unit": ""
+          "unit": " semitones"
         }
       },
     ];
@@ -332,13 +333,13 @@ class Preset {
     <div class="float-right">
       <span id="preset-` + id + `-modulation-rate-display" for="preset-` + id + `-rate" class="` + textClass + `" type="number">` + this.list[id]["modulation-rate"]["value"] + `</span>
     </div>
-    <input id="preset-` + id + `-modulation-rate" type="range" name="preset-slider" class="custom-range" min="0.0" max="10.0" step="0.001" value=` + this.list[id]["modulation-rate"]["value"] + ` preset-id=`+id+`>
+    <input id="preset-` + id + `-modulation-freq" type="range" name="preset-slider" class="custom-range" min="0.0" max="20.0" step="0.01" value=` + this.list[id]["modulation-freq"]["value"] + ` preset-id=`+id+`>
 
     <label>Modulation Depth</label>
     <div class="float-right">
-      <span id="preset-` + id + `-modulation-depth-display" for="preset-` + id + `-depth" class="` + textClass + `" type="number">` + this.list[id]["modulation-depth"]["value"] + `</span>
+      <span id="preset-` + id + `-modulation-depth-display" for="preset-` + id + `-depth" class="` + textClass + `" type="number">` + this.list[id]["modulation-depth"]["value"] + ` semitones</span>
     </div>
-    <input id="preset-` + id + `-modulation-depth" type="range" name="preset-slider" class="custom-range" min="0.00" max="1.0" step="0.001" value=` + this.list[id]["modulation-depth"]["value"] + ` preset-id=`+id+`>
+    <input id="preset-` + id + `-modulation-depth" type="range" name="preset-slider" class="custom-range" min="0.0" max="20.0" step="0.01" value=` + this.list[id]["modulation-depth"]["value"] + ` preset-id=`+id+`>
   </td>
   <td>
     <button id="preset-` + id + `-delete" name="preset-delete" class="btn" value=` + id + `><svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
