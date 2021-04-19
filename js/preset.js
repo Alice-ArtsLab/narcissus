@@ -11,119 +11,120 @@ class Preset {
     }
     this.list = [{
         'time': {
-          "value": 256,
+          "value": 256.0,
           "unit": " ms"
         },
         'feedback': {
-          "value": 0,
+          "value": 0.0,
           "unit": " %"
         },
         'modulation-freq': {
-          "value": 0,
+          "value": 0.0,
           "unit": " hz"
+
         },
         'modulation-depth': {
-          "value": 0,
+          "value": 0.0,
           "unit": " semitones"
         }
       },
       {
         'time': {
-          "value": 256,
+          "value": 256.0,
           "unit": " ms"
         },
         'feedback': {
-          "value": 25,
+          "value": 25.0,
           "unit": " %"
         },
         'modulation-freq': {
-          "value": 0,
+          "value": 0.0,
           "unit": " hz"
         },
         'modulation-depth': {
-          "value": 0,
+          "value": 0.0,
           "unit": " semitones"
         }
       },
       {
         'time': {
-          "value": 512,
+          "value": 512.0,
           "unit": " ms"
         },
         'feedback': {
-          "value": 50,
+          "value": 50.0,
           "unit": " %"
         },
         'modulation-freq': {
-          "value": 0,
+          "value": 0.0,
           "unit": " hz"
         },
         'modulation-depth': {
-          "value": 0,
+          "value": 0.0,
           "unit": " semitones"
         }
       },
       {
         'time': {
-          "value": 512,
+          "value": 512.0,
           "unit": " ms"
         },
         'feedback': {
-          "value": 75,
+          "value": 75.0,
           "unit": " %"
         },
         'modulation-freq': {
-          "value": 0,
+          "value": 0.0,
           "unit": " hz"
         },
         'modulation-depth': {
-          "value": 0,
+          "value": 0.0,
           "unit": " semitones"
         }
       },
       {
         'time': {
-          "value": 256,
+          "value": 256.0,
           "unit": " ms"
         },
         'feedback': {
-          "value": 50,
+          "value": 50.0,
           "unit": " %"
         },
         'modulation-freq': {
-          "value": 0,
+          "value": 0.0,
           "unit": " hz"
         },
         'modulation-depth': {
-          "value": 0,
+          "value": 0.0,
           "unit": " semitones"
         }
       },
       {
         'time': {
-          "value": 256,
+          "value": 256.0,
           "unit": " ms"
         },
         'feedback': {
-          "value": 75,
+          "value": 75.0,
           "unit": " %"
         },
         'modulation-freq': {
-          "value": 0,
+          "value": 0.0,
           "unit": " hz"
         },
         'modulation-depth': {
-          "value": 0,
+          "value": 0.0,
           "unit": " semitones"
         }
       },
       {
         'time': {
-          "value": 256,
+          "value": 256.0,
           "unit": " ms"
         },
         'feedback': {
-          "value": 75,
+          "value": 75.0,
           "unit": " %"
         },
         'modulation-freq': {
@@ -131,79 +132,79 @@ class Preset {
           "unit": " hz"
         },
         'modulation-depth': {
-          "value": 1,
+          "value": 1.0,
           "unit": " semitones"
         }
       },
       {
         'time': {
-          "value": 256,
+          "value": 256.0,
           "unit": " ms"
         },
         'feedback': {
-          "value": 75,
+          "value": 75.0,
           "unit": " %"
         },
         'modulation-freq': {
-          "value": 6,
+          "value": 6.0,
           "unit": " hz"
         },
         'modulation-depth': {
-          "value": 2,
+          "value": 2.0,
           "unit": " semitones"
         }
       },
       {
         'time': {
-          "value": 1024,
+          "value": 1024.0,
           "unit": " ms"
         },
         'feedback': {
-          "value": 75,
+          "value": 75.0,
           "unit": " %"
         },
         'modulation-freq': {
-          "value": 6,
+          "value": 6.0,
           "unit": " hz"
         },
         'modulation-depth': {
-          "value": 2,
+          "value": 2.0,
           "unit": " semitones"
         }
       },
       {
         'time': {
-          "value": 1024,
+          "value": 1024.0,
           "unit": " ms"
         },
         'feedback': {
-          "value": 75,
+          "value": 75.0,
           "unit": " %"
         },
         'modulation-freq': {
-          "value": 3,
+          "value": 3.0,
           "unit": " hz"
         },
         'modulation-depth': {
-          "value": 1,
+          "value": 1.0,
           "unit": " semitones"
         }
       },
       {
         'time': {
-          "value": 1024,
+          "value": 1024.0,
           "unit": " ms"
         },
         'feedback': {
-          "value": 75,
+          "value": 75.0,
           "unit": " %"
         },
         'modulation-freq': {
-          "value": 0,
+          "value": 0.0,
           "unit": " hz"
         },
         'modulation-depth': {
-          "value": 0,
+          "value": 0.0,
           "unit": " semitones"
         }
       },
@@ -235,8 +236,8 @@ class Preset {
     $("#preset-" + this.current.toString() + "-time-display").addClass(this.classes["defaut-text"]);
     $("#preset-" + this.current.toString() + "-feedback-display").removeClass(this.classes["current-text"]);
     $("#preset-" + this.current.toString() + "-feedback-display").addClass(this.classes["defaut-text"]);
-    $("#preset-" + this.current.toString() + "-modulation-freq-display").removeClass(this.classes["current-text"]);
-    $("#preset-" + this.current.toString() + "-modulation-freq-display").addClass(this.classes["defaut-text"]);
+    $("#preset-" + this.current.toString() + "-modulation-rate-display").removeClass(this.classes["current-text"]);
+    $("#preset-" + this.current.toString() + "-modulation-rate-display").addClass(this.classes["defaut-text"]);
     $("#preset-" + this.current.toString() + "-modulation-depth-display").removeClass(this.classes["current-text"]);
     $("#preset-" + this.current.toString() + "-modulation-depth-display").addClass(this.classes["defaut-text"]);
 
@@ -255,10 +256,10 @@ class Preset {
     $("#delay-feedback").val(value);
     $("#delay-feedback-display").text(valueWithUnit);
 
-    value = this.list[this.current]["modulation-freq"]["value"];
-    valueWithUnit = value.toString() + this.list[this.current]["modulation-freq"]["unit"];
-    $("#modulation-freq").val(value);
-    $("#modulation-freq-display").text(valueWithUnit);
+    value = this.list[this.current]["modulation-rate"]["value"];
+    valueWithUnit = value.toString() + this.list[this.current]["modulation-rate"]["unit"];
+    $("#modulation-rate").val(value);
+    $("#modulation-rate-display").text(valueWithUnit);
 
     value = this.list[this.current]["modulation-depth"]["value"];
     valueWithUnit = value.toString() + this.list[this.current]["modulation-depth"]["unit"];
@@ -271,8 +272,8 @@ class Preset {
     $("#preset-" + this.current.toString() + "-time-display").addClass(this.classes["current-text"]);
     $("#preset-" + this.current.toString() + "-feedback-display").removeClass(this.classes["defaut-text"]);
     $("#preset-" + this.current.toString() + "-feedback-display").addClass(this.classes["current-text"]);
-    $("#preset-" + this.current.toString() + "-modulation-freq-display").removeClass(this.classes["defaut-text"]);
-    $("#preset-" + this.current.toString() + "-modulation-freq-display").addClass(this.classes["current-text"]);
+    $("#preset-" + this.current.toString() + "-modulation-rate-display").removeClass(this.classes["defaut-text"]);
+    $("#preset-" + this.current.toString() + "-modulation-rate-display").addClass(this.classes["current-text"]);
     $("#preset-" + this.current.toString() + "-modulation-depth-display").removeClass(this.classes["defaut-text"]);
     $("#preset-" + this.current.toString() + "-modulation-depth-display").addClass(this.classes["current-text"]);
   }
@@ -293,13 +294,13 @@ class Preset {
         "value": feedback,
         "unit": " %"
       },
-      'modulation-freq': {
+      'modulation-rate': {
         "value": modulationFreq,
-        "unit": " hz"
+        "unit": ""
       },
       'modulation-depth': {
         "value": modulationDepth,
-        "unit": " semitones"
+        "unit": ""
       }
     });
   }
@@ -330,7 +331,7 @@ class Preset {
 
     <label>Modulation Frequency</label>
     <div class="float-right">
-      <span id="preset-` + id + `-modulation-freq-display" for="preset-` + id + `-freq" class="` + textClass + `" type="number">` + this.list[id]["modulation-freq"]["value"] + ` hz</span>
+      <span id="preset-` + id + `-modulation-rate-display" for="preset-` + id + `-rate" class="` + textClass + `" type="number">` + this.list[id]["modulation-rate"]["value"] + `</span>
     </div>
     <input id="preset-` + id + `-modulation-freq" type="range" name="preset-slider" class="custom-range" min="0.0" max="20.0" step="0.01" value=` + this.list[id]["modulation-freq"]["value"] + ` preset-id=`+id+`>
 

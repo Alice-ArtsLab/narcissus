@@ -28,6 +28,7 @@ class App {
       currentValues["modulation-freq"]["value"]);
     this.setSliderDisplay("#modulation-freq-display",
       currentValues["modulation-freq"]["value"]);
+
     this.setSlider("#modulation-depth",
       currentValues["modulation-depth"]["value"]);
     this.setSliderDisplay("#modulation-depth-display",
@@ -172,15 +173,10 @@ $(document).ready(function() {
 
     let displayId = "#" + $(this).attr("id").toString() + "-display";
     let unit = "";
-    if (displayId.includes("freq")) {
-      app.audio.vibrato.setFreq(value);
-      unit = " hz";
+    if (displayId.includes("rate")) {
+      app.audio.flanger.setFreq(value);
     } else if (displayId.includes("depth")) {
-      app.audio.vibrato.setDepth(value);
-      unit = " semitones";
-      if (value == 1) {
-        unit = " semitone";
-      }
+      app.audio.flanger.setDepth(value);
     }
     app.setSliderDisplay(displayId, value.toString() + unit);
   });
@@ -192,7 +188,7 @@ $(document).ready(function() {
     app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
       currentPreset["feedback"]["value"] / 100);
 
-    app.audio.vibrato.setAll(currentPreset["modulation-freq"]["value"],
+    app.audio.flanger.setAll(currentPreset["modulation-rate"]["value"],
       currentPreset["modulation-depth"]["value"]);
 
       $("#preset_number").html(index);
@@ -204,7 +200,7 @@ $(document).ready(function() {
     app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
       currentPreset["feedback"]["value"] / 100);
 
-    app.audio.vibrato.setAll(currentPreset["modulation-freq"]["value"],
+    app.audio.flanger.setAll(currentPreset["modulation-rate"]["value"],
       currentPreset["modulation-depth"]["value"]);
       $("#preset_number").html(index);
   });
@@ -216,7 +212,7 @@ $(document).ready(function() {
       app.audio.delay.setAll(currentPreset["time"]["value"] / 1000,
         currentPreset["feedback"]["value"] / 100);
 
-      app.audio.vibrato.setAll(currentPreset["modulation-freq"]["value"],
+      app.audio.flanger.setAll(currentPreset["modulation-rate"]["value"],
         currentPreset["modulation-depth"]["value"]);
     }
   });
@@ -238,12 +234,13 @@ $(document).ready(function() {
       unit = " %";
       app.preset.list[presetID]["feedback"]["value"] = $(this).val();
 
-    } else if (displayId.includes("modulation-freq")) {
-      unit = " hz";
-      app.preset.list[presetID]["modulation-freq"]["value"] = $(this).val();
+    } else if (displayId.includes("modulation-rate")) {
+      unit = "";
+      
+      app.preset.list[presetID]["modulation-rate"]["value"] = $(this).val();
 
     } else if (displayId.includes("modulation-depth")) {
-      unit = " semitones";
+      unit = "";
       app.preset.list[presetID]["modulation-depth"]["value"] = $(this).val();
     }
 
