@@ -24,18 +24,16 @@ class App {
     this.audio.delay.setAll(currentValues["time"]["value"] / 1000.0,
       currentValues["feedback"]["value"] / 100.0);
 
-    this.setSlider("#modulation-freq",
-      currentValues["modulation-freq"]["value"]);
-    this.setSliderDisplay("#modulation-freq-display",
-      currentValues["modulation-freq"]["value"]);
-
+    this.setSlider("#modulation-rate",
+      currentValues["modulation-rate"]["value"]);
+    this.setSliderDisplay("#modulation-rate-display",
+      currentValues["modulation-rate"]["value"]);
     this.setSlider("#modulation-depth",
       currentValues["modulation-depth"]["value"]);
     this.setSliderDisplay("#modulation-depth-display",
       currentValues["modulation-depth"]["value"]);
-
-    this.audio.vibrato.setAll(currentValues["modulation-freq"]["value"],
-      currentValues["modulation-depth"]["value"]);
+    this.audio.flanger.setAll(currentValues["modulation-rate"]["value"],
+      currentValues["modulation-rate"]["value"]);
   }
 
   setSliderDisplay(id, value) {
